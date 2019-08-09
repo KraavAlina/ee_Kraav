@@ -11,29 +11,28 @@
 
 <div class="container">
   <div class="row">
-    <div class="col-3"></div>
-    <div class="col-6">
-        <h3 class="text-center">Вход</h3>
+    <div class="col-4"></div>
+    <div class="col-4">
+        <h3 class="text-center"></br></br></br>Вход</h3>
         <p class="font-weight-light text-center">Войдите или зарегистрируйте новый аккаунт</p>
         </p>
-        <form id="Form" action="action" method="POST">
+        <form id="Form" action="main" method="POST">
           <div class="form-group">
-            <label for="exampleInputEmail1">Логин </label>
-            <input type="login" name="param_2" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="введите свой логин">
-            <small id="emailHelp" class="form-text text-muted"></small>
+            <label for="exampleInputEmail1">Логин</label>
+            <input type="login" typeof="text" name="login" class="form-control" placeholder="Пожалуйста, введите свой логин">
              <c:forEach items="${items}" var="iterator" varStatus="rowStatus">
                 <div> <label>${iterator.id}</label><label>${iterator.name1}</label> </div>
             <c:forEach>
           </div>
           <div class="form-group">
             <label for="exampleInputPassword1">Пароль</label>
-            <input type="password" class="form-control" id="exampleInputPassword1">
+            <input type="password" name="password" class="form-control" >
           </div>
-            <button type="submit" method="POST" class="mr-5 btn btn-primary">Войти</button>
-            <a href="/registration" method="GET" class="btn btn-primary">Зарегистрироваться</a>
+          <button type="submit" class="mr-4 btn btn-primary">Войти</button>
+          <a href="/registration" action="action" method="POST" class="btn btn-link">Создать аккаунт</a>
         </form>
     </div>
-    <div class="col-3"></div>
+    <div class="col-4"></div>
   </div>
 </div>
 
