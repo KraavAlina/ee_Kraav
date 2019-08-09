@@ -17,5 +17,4 @@ public class User implements Serializable {
     private String phone;
     private Double balance;
     private Double discount;
-
 }

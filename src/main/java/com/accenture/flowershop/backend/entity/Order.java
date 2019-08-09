@@ -18,10 +18,6 @@ public class Order implements Serializable {
     private Date dateCreation;
     private Date dateClosing;
     private Double fullPrice;
-    private List<Flower> selectFlowers;
-    private String userId;
-    @ManyToMany
     private List<Flower> flowers;
-    @ManyToOne
     private User user;
 }
