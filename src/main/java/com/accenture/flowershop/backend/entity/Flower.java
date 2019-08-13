@@ -3,16 +3,17 @@ import lombok.Data;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Table;
 import java.io.Serializable;
 
 @Entity
-
+@Table(name = "FLOWERS")
 @Data
-public class Flower<Int> implements Serializable {
+public class Flower {
     @Id
     private String name;
     private Double price;
-    private Int count;
+    private int count;
     private String image;
 
 }

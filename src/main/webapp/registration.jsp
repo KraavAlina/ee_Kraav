@@ -4,7 +4,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-        <title>Login</title>
+        <title>Registration</title>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     </head>
     <body>
@@ -16,7 +16,7 @@
         <h3 class="text-center"></br></br></br>Регистрация</h3>
         <p class="font-weight-light text-center"></p>
         </p>
-        <form id="Form" action="main" method="POST">
+        <form id="Form" action="registration" method="POST">
           <div class="form-group">
             <input type="name" typeof="text" name="name" class="form-control"  placeholder="ФИО">
           </div>

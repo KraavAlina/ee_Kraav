@@ -9,6 +9,7 @@ import java.util.List;
 
 
 @Entity
+@Table(name = "ORDER")
 @Data
 public class Order implements Serializable {
     @Id
