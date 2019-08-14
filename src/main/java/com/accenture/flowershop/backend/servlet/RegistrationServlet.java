@@ -10,12 +10,13 @@ import java.io.IOException;
 public class RegistrationServlet  extends HttpServlet {
     @Override
     public void doGet (HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        response.getWriter().println("doGet RegistrationServlet");
+        String jspName = "registration.jsp";
+        request.getRequestDispatcher(jspName).forward(request, response);
     }
 
     @Override
     public void doPost (HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.setAttribute("Hello", "мир" );
+
         request.getRequestDispatcher("/registration").forward(request, response);
     }
 }

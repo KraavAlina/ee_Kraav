@@ -14,7 +14,9 @@ public class OrderRepository {
     public Order findOrderById (int id) {return null;}
     public List<Order> findOrdersByStatus (String status){return null;}
     public List<Order> findOrdersByDateCreation (Date dateCreation){return null;}
-    public List<Order> findOrdersByUser (User user){return null;}
+    public List<Order> findOrdersByUser (User user){
+
+        return null;}
 
     public void changeOrder (Order order){}
 

@@ -4,6 +4,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -18,7 +19,7 @@ public class Order implements Serializable {
     private String status;
     private Date dateCreation;
     private Date dateClosing;
-    private Double fullPrice;
+    private BigDecimal fullPrice;
     private List<Flower> flowers;
     private User user;
 }

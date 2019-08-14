@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 @Entity
 @Table(name = "USER")
@@ -16,6 +17,6 @@ public class User implements Serializable {
     private String name;
     private String address;
     private String phone;
-    private Double balance;
+    private BigDecimal balance;
     private Double discount;
 }

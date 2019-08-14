@@ -5,8 +5,20 @@
 <%@include file="default/header.jsp" %>
 
 
-<%
-    out.println("<h1>Login: " + (String) request.getAttribute("login") + " </h1>");
-%>
+
+
+<div class="container">
+  <div class="row">
+    <div class="col-4"></div>
+    <div class="col-4">
+        <h3 class="text-center"></br></br></br>
+        <%
+            out.println("<h1>Привет: " + (String) request.getAttribute("login") + " </h1>");
+        %>
+        </h3>
+    </div>
+    <div class="col-4"></div>
+  </div>
+</div>
 
 <%@include file="default/footer.jsp" %>

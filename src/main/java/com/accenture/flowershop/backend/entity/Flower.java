@@ -4,7 +4,7 @@ import lombok.Data;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import java.io.Serializable;
+import java.math.BigDecimal;
 
 @Entity
 @Table(name = "FLOWERS")
@@ -12,8 +12,8 @@ import java.io.Serializable;
 public class Flower {
     @Id
     private String name;
-    private Double price;
-    private int count;
+    private BigDecimal price;
+    private Integer count;
     private String image;
 
 }
