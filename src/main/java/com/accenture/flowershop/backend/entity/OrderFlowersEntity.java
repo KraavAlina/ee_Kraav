@@ -33,7 +33,7 @@ public class OrderFlowersEntity implements Serializable {
 
     @Override
     public String toString() {
-        return "OrderFlower (" +
+        return "OrderFlower(" +
                 "id = " + id +
                 ", flowerName = " + flower.getName() +
                 ", countFlowersInOrder = " + countFlowersInOrder +

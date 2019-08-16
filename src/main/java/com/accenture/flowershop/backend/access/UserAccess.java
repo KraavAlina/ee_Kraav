@@ -14,11 +14,10 @@ public class UserAccess {
     @PersistenceContext
     public EntityManager em;
 
-    public UserEntity add(UserEntity user){
+    public void add(UserEntity user){
         em.getTransaction().begin();
-        UserEntity userFromDB = em.merge(user);
+        em.persist(user);
         em.getTransaction().commit();
-        return userFromDB;
     }
 
     public void delete(long id){
@@ -33,7 +32,7 @@ public class UserAccess {
 
     public void update(UserEntity user){
         em.getTransaction().begin();
-        em.merge(user);
+        em.persist(user);
         em.getTransaction().commit();
     }
 

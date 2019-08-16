@@ -1,6 +1,6 @@
 package com.accenture.flowershop.frontend.DTO;
 
-import com.accenture.flowershop.backend.entity.enums.OrderStatus;
+import com.accenture.flowershop.backend.enums.OrderStatus;
 
 import java.io.Serializable;
 import java.math.BigDecimal;

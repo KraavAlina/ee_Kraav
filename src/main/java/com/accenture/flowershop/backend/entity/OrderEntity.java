@@ -1,5 +1,5 @@
 package com.accenture.flowershop.backend.entity;
-import com.accenture.flowershop.backend.entity.enums.OrderStatus;
+import com.accenture.flowershop.backend.enums.OrderStatus;
 
 
 import javax.persistence.*;

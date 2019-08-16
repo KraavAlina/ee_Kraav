@@ -15,11 +15,10 @@ public class FlowerAccess {
     @PersistenceContext
     public EntityManager em;
 
-    public FlowerEntity add(FlowerEntity flower){
+    public void add(FlowerEntity flower){
         em.getTransaction().begin();
-        FlowerEntity flowerFromDB = em.merge(flower);
+        em.persist(flower);
         em.getTransaction().commit();
-        return flowerFromDB;
     }
 
     public void delete(long id){
@@ -34,7 +33,7 @@ public class FlowerAccess {
 
     public void update(FlowerEntity flower){
         em.getTransaction().begin();
-        em.merge(flower);
+        em.persist(flower);
         em.getTransaction().commit();
     }
 
