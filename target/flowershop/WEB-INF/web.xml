@@ -15,9 +15,17 @@
     </listener-class>
   </listener>
 
+  <resource-ref>
+    <description>flowerShopDS Connection</description>
+    <res-ref-name>jdbc/flowerShopDS</res-ref-name>
+    <res-type>javax.sql.DataSource</res-type>
+    <res-auth>Container</res-auth>
+    <res-sharing-scope>Shareable</res-sharing-scope>
+  </resource-ref>
+
   <servlet>
     <servlet-name>registration</servlet-name>
-    <jsp-file>/registration.jsp</jsp-file>
+    <servlet-class>com.accenture.flowershop.backend.servlet.RegistrationServlet</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>registration</servlet-name>

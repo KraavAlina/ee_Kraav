@@ -1,39 +1,48 @@
 package com.accenture.flowershop.backend.access;
 
 import com.accenture.flowershop.backend.entity.FlowerEntity;
-import org.hibernate.Session;
+import org.springframework.stereotype.Service;
 
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
+import java.util.List;
+
+@Service
 public class FlowerAccess {
 
-    private Session session;
+    @PersistenceContext
+    public EntityManager em;
 
-    public FlowerAccess() {
-
-
+    public FlowerEntity add(FlowerEntity flower){
+        em.getTransaction().begin();
+        FlowerEntity flowerFromDB = em.merge(flower);
+        em.getTransaction().commit();
+        return flowerFromDB;
     }
 
-    public void addFlower(FlowerEntity flower) {
-     /*   Transaction transaction = session.beginTransaction();
-        try {
-            session.save(flower);
-            transaction.commit();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-      */
+    public void delete(long id){
+        em.getTransaction().begin();
+        em.remove(get(id));
+        em.getTransaction().commit();
     }
 
-    public FlowerEntity findFlowerbyName(String name) {
-        return null;
+    public FlowerEntity get(long id){
+        return em.find(FlowerEntity.class, id);
     }
 
-    public void changeFlower(FlowerEntity flower) {
+    public void update(FlowerEntity flower){
+        em.getTransaction().begin();
+        em.merge(flower);
+        em.getTransaction().commit();
     }
 
-    public void removeFlower(FlowerEntity flower) {
+    public List<FlowerEntity> getAll(){
+        TypedQuery<FlowerEntity> namedQuery = em.createNamedQuery("FlowerEntity.getAll", FlowerEntity.class);
+        return namedQuery.getResultList();
     }
+
 }
 
 

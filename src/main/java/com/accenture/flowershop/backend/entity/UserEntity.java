@@ -8,12 +8,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "USER")
+@Table(name = "USERS")
 public class UserEntity implements Serializable {
     @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_cust")
+    @SequenceGenerator(name = "seq_cust", sequenceName = "seq_cust", allocationSize = 1)
+    private Long id;
+    private Boolean admin;
     private String login;
     private String password;
-    private String name;
+    private String fullName;
     private String address;
     private String phone;
     private BigDecimal balance;
@@ -21,14 +25,17 @@ public class UserEntity implements Serializable {
     @OneToMany(mappedBy = "owner", orphanRemoval = true, cascade = CascadeType.ALL)
     private List<OrderEntity> orders = new ArrayList<>();
 
+    public Long getId() { return id; }
+    public Boolean getAdmin() { return admin; }
+
     public String getLogin() { return login; }
     public void setLogin(String login) { this.login = login; }
 
     public String getPassword() { return password; }
     public void setPassword(String password) { this.password = password; }
 
-    public String getName() { return name; }
-    public void setName(String name) { this.name = name; }
+    public String getName() { return fullName; }
+    public void setName(String fullName) { this.fullName = fullName; }
 
     public String getAddress() { return address; }
     public void setAddress(String address) { this.address = address; }
@@ -60,7 +67,7 @@ public class UserEntity implements Serializable {
         return "User (" +
                 "login = " + login +
                 ", password = " + "*".repeat(password.length()) +
-                ", fullName = " + name +
+                ", fullName = " + fullName +
                 ", address = " + address +
                 ", phone = " + phone +
                 ", balance = " + balance +

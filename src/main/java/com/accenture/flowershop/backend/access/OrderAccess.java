@@ -2,23 +2,42 @@ package com.accenture.flowershop.backend.access;
 
 
 import com.accenture.flowershop.backend.entity.OrderEntity;
-import com.accenture.flowershop.backend.entity.UserEntity;
 
-import java.util.Date;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 import java.util.List;
 
 public class OrderAccess {
 
-    public void addOrder (OrderEntity order) {}
+    @PersistenceContext
+    public EntityManager em;
 
-    public OrderEntity findOrderById (int id) {return null;}
-    public List<OrderEntity> findOrdersByStatus (String status){return null;}
-    public List<OrderEntity> findOrdersByDateCreation (Date dateCreation){return null;}
-    public List<OrderEntity> findOrdersByUser (UserEntity user){
+    public OrderEntity add(OrderEntity order){
+        em.getTransaction().begin();
+        OrderEntity orderFromDB = em.merge(order);
+        em.getTransaction().commit();
+        return orderFromDB;
+    }
 
-        return null;}
+    public void delete(long id){
+        em.getTransaction().begin();
+        em.remove(get(id));
+        em.getTransaction().commit();
+    }
 
-    public void changeOrder (OrderEntity order){}
+    public OrderEntity get(long id){
+        return em.find(OrderEntity.class, id);
+    }
 
-    public void removeOrder (OrderEntity order){}
+    public void update(OrderEntity order){
+        em.getTransaction().begin();
+        em.merge(order);
+        em.getTransaction().commit();
+    }
+
+    public List<OrderEntity> getAll(){
+        TypedQuery<OrderEntity> namedQuery = em.createNamedQuery("OrderEntity.getAll", OrderEntity.class);
+        return namedQuery.getResultList();
+    }
 }

@@ -5,8 +5,8 @@ import com.accenture.flowershop.backend.entity.enums.OrderStatus;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 
@@ -18,27 +18,26 @@ public class OrderEntity implements Serializable {
     private Long id;
     @Enumerated(EnumType.STRING)
     private OrderStatus status;
-    private Date dateCreation;
-    private Date dateClosing;
+    private LocalDateTime dateCreation;
+    private LocalDateTime dateClosing;
     private BigDecimal fullPrice;
-    @OneToMany (mappedBy = "order", orphanRemoval = true, cascade = CascadeType.ALL)
-    @JoinColumn(name = "orderId")
-    private List<OrderFlowersEntity> flowers = new ArrayList<OrderFlowersEntity>();;
     @ManyToOne
     @JoinColumn(name = "owner",  referencedColumnName = "login")
     private UserEntity owner;
+    @OneToMany (mappedBy = "order", orphanRemoval = true, cascade = CascadeType.ALL)
+    @JoinColumn(name = "orderId")
+    private List<OrderFlowersEntity> flowersDate = new ArrayList<OrderFlowersEntity>();;
 
     public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
 
     public BigDecimal getFullPrice() { return fullPrice; }
     public void setFullPrice(BigDecimal fullPrice) { this.fullPrice = fullPrice; }
 
-    public Date getDateCreation() { return dateCreation; }
-    public void setDateCreation(Date dateCreation) { this.dateCreation = dateCreation; }
+    public LocalDateTime getDateCreation() { return dateCreation; }
+    public void setDateCreation(LocalDateTime dateCreation) { this.dateCreation = dateCreation; }
 
-    public Date getDateClosing() { return dateClosing; }
-    public void setDateClosing(Date dateClosing) { this.dateClosing = dateClosing; }
+    public LocalDateTime getDateClosing() { return dateClosing; }
+    public void setDateClosing(LocalDateTime dateClosing) { this.dateClosing = dateClosing; }
 
     public OrderStatus getStatus() { return status; }
     public void setStatus(OrderStatus status) { this.status = status; }
@@ -46,16 +45,16 @@ public class OrderEntity implements Serializable {
     public UserEntity getOwner() { return owner; }
     public void setOwner(UserEntity owner) { this.owner = owner; }
 
-    public List<OrderFlowersEntity> getFlowers() { return flowers; }
-    public void setFlowers(List<OrderFlowersEntity> flowers) { this.flowers = flowers; }
+    public List<OrderFlowersEntity> getFlowersDate() { return flowersDate; }
+    public void setFlowersDate(List<OrderFlowersEntity> flowersDate) { this.flowersDate = flowersDate; }
 
     public void addFlowers(OrderFlowersEntity d) {
-        flowers.add(d);
-        d.setOrderId(this.id);
+        flowersDate.add(d);
+        d.setOrderId(this);
     }
     public void removeFlowers(OrderFlowersEntity d) {
         d.setOrderId(null);
-        flowers.remove(d);
+        flowersDate.remove(d);
     }
 
     @Override

@@ -1,39 +1,44 @@
 package com.accenture.flowershop.backend.access;
 
 import com.accenture.flowershop.backend.entity.UserEntity;
-import org.hibernate.Session;
+
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
+import java.util.List;
 
 
 public class UserAccess {
 
-    private Session session;
-
     @PersistenceContext
-    private EntityManager em;
+    public EntityManager em;
 
-    UserAccess() {
-
+    public UserEntity add(UserEntity user){
+        em.getTransaction().begin();
+        UserEntity userFromDB = em.merge(user);
+        em.getTransaction().commit();
+        return userFromDB;
     }
 
-    public void addUser (UserEntity user) {
-  /*      Transaction transaction = session.beginTransaction();
-        try {
-            session.save(user);
-            transaction.commit();
-        } catch (Exception e) {
-            System.out.println("Error session.");
-        }
-
-   */
+    public void delete(long id){
+        em.getTransaction().begin();
+        em.remove(get(id));
+        em.getTransaction().commit();
     }
 
-    public UserEntity findUserbyId (int id){return null;}
-    public UserEntity findUserbyLogin (String login){return null;}
-    public UserEntity findUserbyName (String name){return null;}
+    public UserEntity get(long id){
+        return em.find(UserEntity.class, id);
+    }
 
-    public void changeUser (UserEntity user){}
+    public void update(UserEntity user){
+        em.getTransaction().begin();
+        em.merge(user);
+        em.getTransaction().commit();
+    }
 
+    public List<UserEntity> getAll(){
+        TypedQuery<UserEntity> namedQuery = em.createNamedQuery("OrderEntity.getAll", UserEntity.class);
+        return namedQuery.getResultList();
+    }
 }

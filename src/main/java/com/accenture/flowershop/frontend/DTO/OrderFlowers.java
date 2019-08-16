@@ -1,21 +1,14 @@
 package com.accenture.flowershop.frontend.DTO;
 
-import javax.persistence.criteria.Order;
 import java.io.Serializable;
 
 public class OrderFlowers implements Serializable {
     private Long id;
     private Long flowerId;
-    private Integer count;
+    private Integer countFlowersInOrder;
     private Long orderId;
 
     public OrderFlowers() { }
-
-    public OrderFlowers(Long flowerId, Long orderId, Integer count) {
-        this.flowerId = flowerId;
-        this.count = count;
-        this.orderId = orderId;
-    }
 
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
@@ -23,8 +16,8 @@ public class OrderFlowers implements Serializable {
     public Long getFlowerId() { return flowerId; }
     public void setFlowerId(Long flowerId) { this.flowerId = flowerId;}
 
-    public Integer getCount() { return count; }
-    public void setCount(Integer count) { this.count = count; }
+    public Integer getCount() { return countFlowersInOrder; }
+    public void setCount(Integer countFlowersInOrder) { this.countFlowersInOrder = countFlowersInOrder; }
 
     public Long getOrder() { return orderId; }
     public void setOrder(Long orderId) { this.orderId = orderId; }
@@ -36,7 +29,7 @@ public class OrderFlowers implements Serializable {
         OrderFlowers temp = (OrderFlowers) o;
         if ( this.id.equals(((OrderFlowers) o).id) &&
                 this.flowerId.equals(((OrderFlowers) o).flowerId) &&
-                this.count.equals(((OrderFlowers) o).count) &&
+                this.countFlowersInOrder.equals(((OrderFlowers) o).countFlowersInOrder) &&
                 this.orderId.equals(((OrderFlowers) o).orderId)
         )
         return true;
@@ -49,7 +42,7 @@ public class OrderFlowers implements Serializable {
         return "OrderFlowerData(" +
                 "id = " + id +
                 ", flowerId = " + flowerId +
-                ", count = " + count +
+                ", countFlowersInOrder = " + countFlowersInOrder +
                 ", orderId = " + orderId +
                 ")";
     }

@@ -1,6 +1,9 @@
 package com.accenture.flowershop.backend.entity;
 
+import com.accenture.flowershop.frontend.DTO.Flower;
+
 import javax.persistence.*;
+import javax.persistence.criteria.Order;
 import java.io.Serializable;
 
 @Entity
@@ -9,31 +12,32 @@ public class OrderFlowersEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Long flowerId;
-    private Integer count;
     @ManyToOne
-    @JoinColumn(name="order_id", referencedColumnName="id")
-    private Long orderId;
+    @JoinColumn(name = "flower")
+    private FlowerEntity flower;
+    private Integer countFlowersInOrder;
+    @ManyToOne
+    @JoinColumn(name = "orderId")
+    private OrderEntity order;
 
     public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
 
-    public Long getFlowerName() { return flowerId; }
-    public void setFlowerName(Long flowerId) { this.flowerId = flowerId; }
+    public FlowerEntity getFlower() { return flower; }
+    public void setFlowerName(FlowerEntity flower) { this.flower = flower; }
 
-    public Integer getCount() { return count; }
-    public void setCount(Integer count) { this.count = count; }
+    public Integer getCount() { return countFlowersInOrder; }
+    public void setCount(Integer countFlowersInOrder) { this.countFlowersInOrder = countFlowersInOrder; }
 
-    public Long getOrderId() { return orderId; }
-    public void setOrderId(Long orderId) { this.orderId = orderId; }
+    public OrderEntity getOrder() { return order; }
+    public void setOrderId(OrderEntity orderId) { this.order = order; }
 
     @Override
     public String toString() {
         return "OrderFlower (" +
                 "id = " + id +
-                ", flowerName = " + flowerId +
-                ", count = " + count +
-                ", order = " + orderId +
+                ", flowerName = " + flower.getName() +
+                ", countFlowersInOrder = " + countFlowersInOrder +
+                ", orderId = " + order.getId() +
                 ")";
     }
 }
