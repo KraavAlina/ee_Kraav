@@ -2,11 +2,13 @@ package com.accenture.flowershop.backend.services;
 
 import com.accenture.flowershop.backend.access.UserAccess;
 import com.accenture.flowershop.backend.entity.UserEntity;
+import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.List;
 
-public class UserService extends UserAccess {
+@Service
+public class UserService  {
 
     private UserAccess userAccess = new UserAccess();
 

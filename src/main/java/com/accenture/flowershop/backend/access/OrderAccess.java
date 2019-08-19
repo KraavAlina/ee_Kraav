@@ -2,12 +2,14 @@ package com.accenture.flowershop.backend.access;
 
 
 import com.accenture.flowershop.backend.entity.OrderEntity;
+import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import java.util.List;
 
+@Repository
 public class OrderAccess {
 
     @PersistenceContext

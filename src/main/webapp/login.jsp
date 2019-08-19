@@ -9,8 +9,7 @@
     <div class="col-4">
         <h3 class="text-center"></br></br></br>Вход</h3>
         <p class="font-weight-light text-center">Войдите или зарегистрируйте новый аккаунт</p>
-        </p>
-        <form id="Form" action="login" method="POST">
+        <form id="Form" method="POST">
           <div class="form-group">
             <label for="exampleInputEmail1">Логин</label>
             <input type="login" typeof="text" name="login" class="form-control" placeholder="Введите логин">
