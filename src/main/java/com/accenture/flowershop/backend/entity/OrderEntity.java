@@ -8,6 +8,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 
 @Entity
@@ -21,17 +22,33 @@ public class OrderEntity implements Serializable {
     private LocalDateTime dateCreation;
     private LocalDateTime dateClosing;
     private BigDecimal fullPrice;
+    private BigDecimal discountPrice;
     @ManyToOne
     @JoinColumn(name = "owner",  referencedColumnName = "login")
     private UserEntity owner;
     @OneToMany (mappedBy = "order", orphanRemoval = true, cascade = CascadeType.ALL)
     @JoinColumn(name = "orderId")
-    private List<OrderFlowersEntity> flowersDate = new ArrayList<OrderFlowersEntity>();;
+    private List<FlowersInOrderEntity> flowersDate = new ArrayList<FlowersInOrderEntity>();;
 
+    public OrderEntity(){}
+
+    public OrderEntity(UserEntity owner) {
+        this.dateCreation = LocalDateTime.now();
+        this.owner = owner;
+    }
+
+    public void setId(Long id) {this.id = id;} //Todo delete
     public Long getId() { return id; }
 
     public BigDecimal getFullPrice() { return fullPrice; }
     public void setFullPrice(BigDecimal fullPrice) { this.fullPrice = fullPrice; }
+
+    public BigDecimal getDiscountPrice() {
+        return discountPrice;
+    }
+    public void setDiscountPrice(BigDecimal discountPrice) {
+        this.discountPrice = discountPrice;
+    }
 
     public LocalDateTime getDateCreation() { return dateCreation; }
     public void setDateCreation(LocalDateTime dateCreation) { this.dateCreation = dateCreation; }
@@ -45,27 +62,47 @@ public class OrderEntity implements Serializable {
     public UserEntity getOwner() { return owner; }
     public void setOwner(UserEntity owner) { this.owner = owner; }
 
-    public List<OrderFlowersEntity> getFlowersDate() { return flowersDate; }
-    public void setFlowersDate(List<OrderFlowersEntity> flowersDate) { this.flowersDate = flowersDate; }
+    public List<FlowersInOrderEntity> getFlowersDate() { return flowersDate; }
+    public void setFlowersDate(List<FlowersInOrderEntity> flowersDate) { this.flowersDate = flowersDate; }
 
-    public void addFlowers(OrderFlowersEntity d) {
+    public void addFlowers(FlowersInOrderEntity d) {
         flowersDate.add(d);
-        d.setOrderId(this);
+        d.setOrder(this);
     }
-    public void removeFlowers(OrderFlowersEntity d) {
-        d.setOrderId(null);
+    public void removeFlowers(FlowersInOrderEntity d) {
+        d.setOrder(null);
         flowersDate.remove(d);
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof OrderEntity)) return false;
+        OrderEntity that = (OrderEntity) o;
+        return Objects.equals(getId(), that.getId()) &&
+                getStatus() == that.getStatus() &&
+                Objects.equals(getDateCreation(), that.getDateCreation()) &&
+                Objects.equals(getDateClosing(), that.getDateClosing()) &&
+                Objects.equals(getFullPrice(), that.getFullPrice()) &&
+                Objects.equals(getOwner(), that.getOwner()) &&
+                Objects.equals(getFlowersDate(), that.getFlowersDate());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getStatus(), getDateCreation(), getDateClosing(), getFullPrice(), getOwner(), getFlowersDate());
+    }
+
+    @Override
     public String toString() {
-        return "OrderEntity (" +
-                "id = " + id +
-                ", fullPrice = " + fullPrice +
-                ", dateCreation = " + dateCreation +
-                ", dateClosing = " + dateClosing +
-                ", status = " + status +
-                ", owner = " + owner +
-                ")";
+        return "OrderEntity{" +
+                "id=" + id +
+                ", status=" + status +
+                ", dateCreation=" + dateCreation +
+                ", dateClosing=" + dateClosing +
+                ", fullPrice=" + fullPrice +
+                ", owner=" + owner.getLogin() +
+                ", flowersDateSize=" + flowersDate.size() +
+                '}';
     }
 }

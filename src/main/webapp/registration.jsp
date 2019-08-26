@@ -10,25 +10,36 @@
         <h3 class="text-center"></br></br></br>Регистрация</h3>
         <p class="font-weight-light text-center"></p>
         </p>
-        <form id="Form" action="registration" method="POST">
+        <form id="Form" method="POST">
           <div class="form-group">
-            <input type="name" typeof="text" name="name" class="form-control"  placeholder="ФИО">
+            <input type="text" name="name" class="form-control"  placeholder="ФИО">
           </div>
           <div class="form-group">
-            <input type="address" typeof="text" name="address" class="form-control" placeholder="Адрес проживания">
+            <input type="text" name="address" class="form-control" placeholder="Адрес проживания">
           </div>
           <div class="form-group">
-             <input id="phone" type="text" class="form-control input-medium bfh-phone" data-format="+7 (ddd) ddd-dddd">
+             <input id="phone" name="phone" class="form-control input-medium bfh-phone" data-format="+7 (ddd) ddd-dddd" placeholder="Телефон">
           </div>
           <div class="form-group">
-            <input type="login" name="login" class="form-control" placeholder="Логин">
+            <input type="text" name="login" class="form-control" placeholder="Логин">
           </div>
            <div class="form-group">
-              <input type="password1" name="password1" class="form-control" placeholder="Пароль">
+              <input type="password" name="password1" class="form-control" placeholder="Пароль">
            </div>
            <div class="form-group">
-                 <input type="password2" name="password2" class="form-control" placeholder="Повторите пароль">
+               <input type="password" name="password2" class="form-control" placeholder="Повторите пароль">
            </div>
+           <%
+                if ((String) request.getAttribute("error") != null) {
+                    if (request.getAttribute("error").equals("errorEmptyDataRegistration"))
+                        out.println("<div class='alert alert-warning' role='alert'>" + "Заполните все поля" + "</div>");
+                    if (request.getAttribute("error").equals("errorEqualsPass"))
+                        out.println("<div class='alert alert-warning' role='alert'>" + "Пароли не совпадают" + "</div>");
+                    if (request.getAttribute("error").equals("errorLoginBusy"))
+                        out.println("<div class='alert alert-warning' role='alert'>" + "Логин уже занят" + "</div>");
+                    request.setAttribute("error", null);
+                 }
+           %>
           <button type="submit" class="mr-4 btn btn-primary">Зарегистрироваться</button>
         </form>
     </div>
@@ -36,11 +47,5 @@
   </div>
 </div>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/3.3.4/inputmask/inputmask.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/3.3.4/inputmask/jquery.inputmask.js"></script>
-<script>
-    $("#phone").inputmask({"mask":"+7 (999) 999-9999"});
-</script>
 
 <%@include file="default/footer.jsp" %>

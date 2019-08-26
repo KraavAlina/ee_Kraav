@@ -2,33 +2,49 @@ package com.accenture.flowershop.backend.services;
 
 import com.accenture.flowershop.backend.access.UserAccess;
 import com.accenture.flowershop.backend.entity.UserEntity;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
+import javax.transaction.Transactional;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.List;
+import java.util.logging.Logger;
+
 
 @Service
 public class UserService  {
+    private static final Logger LOG = Logger.getLogger(UserEntity.class.getName());
 
-    private UserAccess userAccess = new UserAccess();
+    @Autowired
+    private UserAccess userAccess;
 
-    public UserService() {
+    @PostConstruct
+    public void init() {
+        LOG.info("User service on");
     }
 
-    public UserEntity findUser(int id) {
-        return userAccess.get(id);
+    public UserEntity registration (UserEntity userEntity) {
+        if (userAccess.get(userEntity) != null)
+            return null;
+        userEntity.setBalance(new BigDecimal(2000).setScale(2, RoundingMode.CEILING));
+        userEntity.setDiscount(0);
+        UserEntity savedUser = userAccess.add(userEntity);
+        return savedUser;
     }
 
-    public void createUser(UserEntity user) {
-        userAccess.add(user);
+    public UserEntity login (UserEntity userEntity){
+        return userAccess.get(userEntity);
     }
 
-    public void deleteUser(UserEntity user) {
-        userAccess.delete(user.getId());
+
+    public void deleteUser(UserEntity userEntity) {
+        userAccess.delete(userEntity);
     }
 
-    public void updateUser(UserEntity user) {
-        userAccess.update(user);
+    public void updateUser(UserEntity userEntity) {
+        userAccess.update(userEntity);
     }
 
     public List<UserEntity> getAllUsers() {

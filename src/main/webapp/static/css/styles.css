@@ -1,0 +1,7 @@
+table img {
+   height: 100px;
+}
+
+table td, table th {
+   text-align: center;
+}

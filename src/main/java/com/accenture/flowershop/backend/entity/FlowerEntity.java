@@ -3,6 +3,7 @@ package com.accenture.flowershop.backend.entity;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.Objects;
 
 @Entity
 @Table(name = "FLOWERS")
@@ -16,6 +17,15 @@ public class FlowerEntity implements Serializable {
     private Integer countFlowersInStock;
     private String image;
 
+    public FlowerEntity(){}
+
+    public FlowerEntity(String name, BigDecimal price, Integer countFlowersInStock, String image) {
+        this.name = name;
+        this.price = price;
+        this.countFlowersInStock = countFlowersInStock;
+        this.image = image;
+    }
+    public void setId(Long id) {this.id = id;} //Todo delete
     public Long getId() { return id; }
 
     public String getName() { return name; }
@@ -31,11 +41,30 @@ public class FlowerEntity implements Serializable {
     public void setImage(String image) { this.image = image; }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof FlowerEntity)) return false;
+        FlowerEntity that = (FlowerEntity) o;
+        return Objects.equals(getId(), that.getId()) &&
+                Objects.equals(getName(), that.getName()) &&
+                Objects.equals(getPrice(), that.getPrice()) &&
+                Objects.equals(countFlowersInStock, that.countFlowersInStock) &&
+                Objects.equals(getImage(), that.getImage());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getName(), getPrice(), countFlowersInStock, getImage());
+    }
+
+    @Override
     public String toString() {
-        return "Flower (" +
-                "name = " + name +
-                ", price = " + price +
-                ", countFlowersInStock = " + countFlowersInStock +
-                ")";
+        return "FlowerEntity{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", price=" + price +
+                ", countFlowersInStock=" + countFlowersInStock +
+                ", image='" + image + '\'' +
+                '}';
     }
 }

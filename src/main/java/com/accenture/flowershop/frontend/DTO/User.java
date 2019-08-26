@@ -2,9 +2,9 @@ package com.accenture.flowershop.frontend.DTO;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.Objects;
 
 public class User implements Serializable {
-    private Boolean admin;
     private String login;
     private String password;
     private String fullName;
@@ -16,8 +16,6 @@ public class User implements Serializable {
     public User() { }
 
     public User(String login, String password, String fullName, String address, String phone) {
-        if (login.equals("admin")) this.admin = true;
-        else this.admin = false;
         this.login = login;
         this.password = password;
         this.fullName = fullName;
@@ -25,7 +23,7 @@ public class User implements Serializable {
         this.phone = phone;
     }
 
-    public Boolean getAdmin() { return admin; }
+    public Boolean isAdmin() { return (login.equals("admin")); }
 
     public String getLogin() { return login; }
     public void setLogin(String login) { this.login = login; }
@@ -63,6 +61,11 @@ public class User implements Serializable {
         )
             return true;
         else return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(login, password, fullName, address, phone, balance, discount);
     }
 
     @Override

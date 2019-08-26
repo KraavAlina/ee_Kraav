@@ -6,6 +6,7 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name = "USERS")
@@ -14,7 +15,6 @@ public class UserEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_cust")
     @SequenceGenerator(name = "seq_cust", sequenceName = "seq_cust", allocationSize = 1)
     private Long id;
-    private Boolean admin;
     private String login;
     private String password;
     private String fullName;
@@ -25,8 +25,24 @@ public class UserEntity implements Serializable {
     @OneToMany(mappedBy = "owner", orphanRemoval = true, cascade = CascadeType.ALL)
     private List<OrderEntity> orders = new ArrayList<>();
 
+    public UserEntity (){}
+
+    public UserEntity(String login, String password) {
+        this.login = login;
+        this.password = password;
+    }
+
+    public UserEntity (String login, String password, String fullName, String address, String phone) {
+        this.setLogin(login);
+        this.setPassword(password);
+        this.setFullName(fullName);
+        this.setAddress(address);
+        this.setPhone(phone);
+    }
+
+    public void setId(Long id) {this.id = id;} //Todo delete
     public Long getId() { return id; }
-    public Boolean getAdmin() { return admin; }
+    public Boolean isAdmin() { return (login.equals("admin")); }
 
     public String getLogin() { return login; }
     public void setLogin(String login) { this.login = login; }
@@ -34,8 +50,8 @@ public class UserEntity implements Serializable {
     public String getPassword() { return password; }
     public void setPassword(String password) { this.password = password; }
 
-    public String getName() { return fullName; }
-    public void setName(String fullName) { this.fullName = fullName; }
+    public String getFullName() { return fullName; }
+    public void setFullName(String fullName) { this.fullName = fullName; }
 
     public String getAddress() { return address; }
     public void setAddress(String address) { this.address = address; }
@@ -63,16 +79,39 @@ public class UserEntity implements Serializable {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof UserEntity)) return false;
+        UserEntity that = (UserEntity) o;
+        return Objects.equals(getId(), that.getId()) &&
+                Objects.equals(getLogin(), that.getLogin()) &&
+                Objects.equals(getPassword(), that.getPassword()) &&
+                Objects.equals(getFullName(), that.getFullName()) &&
+                Objects.equals(getAddress(), that.getAddress()) &&
+                Objects.equals(getPhone(), that.getPhone()) &&
+                Objects.equals(getBalance(), that.getBalance()) &&
+                Objects.equals(getDiscount(), that.getDiscount()) &&
+                Objects.equals(getOrders(), that.getOrders());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getLogin(), getPassword(), getFullName(), getAddress(), getPhone(), getBalance(), getDiscount(), getOrders());
+    }
+
+    @Override
     public String toString() {
-        return "User (" +
-                "login = " + login +
-                ", password = " + "*".repeat(password.length()) +
-                ", fullName = " + fullName +
-                ", address = " + address +
-                ", phone = " + phone +
-                ", balance = " + balance +
-                ", discount = " + discount +
-                ")";
+        return "UserEntity{" +
+                "id=" + id +
+                ", login='" + login + '\'' +
+                ", password='" + "*".repeat(password.length()) + '\'' +
+                ", fullName='" + fullName + '\'' +
+                ", address='" + address + '\'' +
+                ", phone='" + phone + '\'' +
+                ", balance=" + balance +
+                ", discount=" + discount +
+                ", orders=" + orders +
+                '}';
     }
 }
 
