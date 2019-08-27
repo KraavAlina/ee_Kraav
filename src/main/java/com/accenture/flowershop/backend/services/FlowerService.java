@@ -4,15 +4,15 @@ import com.accenture.flowershop.backend.access.FlowerAccess;
 import com.accenture.flowershop.backend.entity.FlowerEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.PostConstruct;
-//import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
+@Transactional
 @Service
-//@Transactional
 public class FlowerService {
     private static final Logger LOG = Logger.getLogger(FlowerEntity.class.getName());
 

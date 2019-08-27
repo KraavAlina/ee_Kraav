@@ -29,11 +29,12 @@
         <property name="placeholderSuffix" value="}"/>
     </bean>
 
-    <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean"
+    <bean id="entityManagerFactory"
+          class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean"
           depends-on="flyway">
         <property name="dataSource" ref="dataSource"/>
         <property name="packagesToScan">
-            <list><value>flowershop.backend.entity</value></list>
+            <list><value>com.accenture.flowershop.backend.entity</value></list>
         </property>
         <property name="jpaVendorAdapter">
             <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">

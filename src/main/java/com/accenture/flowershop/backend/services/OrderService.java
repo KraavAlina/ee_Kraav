@@ -10,6 +10,7 @@ import com.accenture.flowershop.backend.entity.UserEntity;
 import com.accenture.flowershop.backend.enums.OrderStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.PostConstruct;
 import java.math.BigDecimal;
@@ -19,6 +20,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
 
+@Transactional
 @Service
 public class OrderService {
     private static final Logger LOG = Logger.getLogger(OrderEntity.class.getName());

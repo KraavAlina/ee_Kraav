@@ -1,6 +1,7 @@
 package com.accenture.flowershop.backend.entity;
 
 
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -8,13 +9,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-@Entity
+
 @Table(name = "USERS")
+@Entity(name = "UserEntity")
 public class UserEntity implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_cust")
-    @SequenceGenerator(name = "seq_cust", sequenceName = "seq_cust", allocationSize = 1)
-    private Long id;
     private String login;
     private String password;
     private String fullName;
@@ -22,6 +21,7 @@ public class UserEntity implements Serializable {
     private String phone;
     private BigDecimal balance;
     private Integer discount;
+
     @OneToMany(mappedBy = "owner", orphanRemoval = true, cascade = CascadeType.ALL)
     private List<OrderEntity> orders = new ArrayList<>();
 
@@ -40,8 +40,6 @@ public class UserEntity implements Serializable {
         this.setPhone(phone);
     }
 
-    public void setId(Long id) {this.id = id;} //Todo delete
-    public Long getId() { return id; }
     public Boolean isAdmin() { return (login.equals("admin")); }
 
     public String getLogin() { return login; }
@@ -83,8 +81,7 @@ public class UserEntity implements Serializable {
         if (this == o) return true;
         if (!(o instanceof UserEntity)) return false;
         UserEntity that = (UserEntity) o;
-        return Objects.equals(getId(), that.getId()) &&
-                Objects.equals(getLogin(), that.getLogin()) &&
+        return  Objects.equals(getLogin(), that.getLogin()) &&
                 Objects.equals(getPassword(), that.getPassword()) &&
                 Objects.equals(getFullName(), that.getFullName()) &&
                 Objects.equals(getAddress(), that.getAddress()) &&
@@ -96,13 +93,12 @@ public class UserEntity implements Serializable {
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getLogin(), getPassword(), getFullName(), getAddress(), getPhone(), getBalance(), getDiscount(), getOrders());
+        return Objects.hash(getLogin(), getPassword(), getFullName(), getAddress(), getPhone(), getBalance(), getDiscount(), getOrders());
     }
 
     @Override
     public String toString() {
         return "UserEntity{" +
-                "id=" + id +
                 ", login='" + login + '\'' +
                 ", password='" + "*".repeat(password.length()) + '\'' +
                 ", fullName='" + fullName + '\'' +

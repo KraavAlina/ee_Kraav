@@ -6,17 +6,21 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Objects;
 
+
 @Entity
 @Table(name = "FLOWERS_IN_ORDER")
 public class FlowersInOrderEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @ManyToOne
     @JoinColumn(name = "flowerInOrder")
     private FlowerEntity flower;
+
     private Integer countFlowersInOrder;
     private BigDecimal pricePerFlower;
+
     @ManyToOne
     @JoinColumn(name = "orderWithFlowers")
     private OrderEntity order;

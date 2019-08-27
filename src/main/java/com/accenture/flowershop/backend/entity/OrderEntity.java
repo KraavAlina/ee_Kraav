@@ -23,11 +23,12 @@ public class OrderEntity implements Serializable {
     private LocalDateTime dateClosing;
     private BigDecimal fullPrice;
     private BigDecimal discountPrice;
+
     @ManyToOne
     @JoinColumn(name = "owner",  referencedColumnName = "login")
     private UserEntity owner;
+
     @OneToMany (mappedBy = "order", orphanRemoval = true, cascade = CascadeType.ALL)
-    @JoinColumn(name = "orderId")
     private List<FlowersInOrderEntity> flowersDate = new ArrayList<FlowersInOrderEntity>();;
 
     public OrderEntity(){}

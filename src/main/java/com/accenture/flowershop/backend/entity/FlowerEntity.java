@@ -9,8 +9,9 @@ import java.util.Objects;
 @Table(name = "FLOWERS")
 public class FlowerEntity implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_cust")
-    @SequenceGenerator(name = "seq_cust", sequenceName = "seq_cust", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_cust")
+//    @SequenceGenerator(name = "seq_cust", sequenceName = "seq_cust", allocationSize = 1)
     private Long id;
     private String name;
     private BigDecimal price;
