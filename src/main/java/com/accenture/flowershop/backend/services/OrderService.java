@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.annotation.PostConstruct;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.sql.Timestamp;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -95,7 +96,7 @@ public class OrderService {
 
             // Изменение количества цветов на складе, в БД
             int changeCount;
-            List<FlowersInOrderEntity> flowersOfOrder = orderEntity.getFlowersDate();
+            List<FlowersInOrderEntity> flowersOfOrder = orderEntity.getFlowersData();
             for (FlowersInOrderEntity flowers : flowersOfOrder) {
                 if (flowers.getOrder().equals(orderEntity)) {
                      changeCount = flowers.getFlower().getCount() - flowers.getCount();
@@ -105,10 +106,11 @@ public class OrderService {
             }
             // Изменение данных пользователя
             owner.addOrder(orderEntity);
-            userAccess.update(owner);
-
             // Добавление данных заказа в БД
             orderAccess.add(orderEntity);
+
+            userAccess.update(owner);
+
             return orderEntity;
         }
     }

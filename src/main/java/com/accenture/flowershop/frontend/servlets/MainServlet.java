@@ -18,7 +18,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -97,7 +96,7 @@ public class MainServlet extends HttpServlet {
 
                 UserEntity owner = (UserEntity) session.getAttribute("user");
                 OrderEntity newOrder = orderService.createOrder(owner, receivedFlowerIdMap);
-                List<FlowersInOrderEntity> flowersOfOrder = newOrder.getFlowersDate();
+                List<FlowersInOrderEntity> flowersOfOrder = newOrder.getFlowersData();
 
                 /* В сессию кладем заказ "cart", список цветов в заказе в формате FO,
                 удаляем заказ из request

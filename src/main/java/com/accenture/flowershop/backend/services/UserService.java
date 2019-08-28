@@ -39,17 +39,8 @@ public class UserService  {
         return userAccess.get(userEntity);
     }
 
-
-    public void deleteUser(UserEntity userEntity) {
-        userAccess.delete(userEntity);
-    }
-
     public void updateUser(UserEntity userEntity) {
         userAccess.update(userEntity);
-    }
-
-    public List<UserEntity> getAllUsers() {
-        return userAccess.getAll();
     }
 
 }

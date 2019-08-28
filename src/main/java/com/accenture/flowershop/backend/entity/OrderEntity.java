@@ -5,14 +5,16 @@ import com.accenture.flowershop.backend.enums.OrderStatus;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 
-@Entity
-@Table(name = "ORDER")
+@Table(name = "ORDERS")
+@Entity(name="OrderEntity")
+@NamedQuery(name = "OrderEntity.getAll", query = "SELECT c from OrderEntity c")
 public class OrderEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,11 +27,11 @@ public class OrderEntity implements Serializable {
     private BigDecimal discountPrice;
 
     @ManyToOne
-    @JoinColumn(name = "owner",  referencedColumnName = "login")
+    @JoinColumn(name = "owner_login",  referencedColumnName = "login")
     private UserEntity owner;
 
-    @OneToMany (mappedBy = "order", orphanRemoval = true, cascade = CascadeType.ALL)
-    private List<FlowersInOrderEntity> flowersDate = new ArrayList<FlowersInOrderEntity>();;
+    @OneToMany (mappedBy = "order", orphanRemoval = true, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<FlowersInOrderEntity> flowersData = new ArrayList<FlowersInOrderEntity>();;
 
     public OrderEntity(){}
 
@@ -38,7 +40,6 @@ public class OrderEntity implements Serializable {
         this.owner = owner;
     }
 
-    public void setId(Long id) {this.id = id;} //Todo delete
     public Long getId() { return id; }
 
     public BigDecimal getFullPrice() { return fullPrice; }
@@ -63,16 +64,16 @@ public class OrderEntity implements Serializable {
     public UserEntity getOwner() { return owner; }
     public void setOwner(UserEntity owner) { this.owner = owner; }
 
-    public List<FlowersInOrderEntity> getFlowersDate() { return flowersDate; }
-    public void setFlowersDate(List<FlowersInOrderEntity> flowersDate) { this.flowersDate = flowersDate; }
+    public List<FlowersInOrderEntity> getFlowersData() { return flowersData; }
+    public void setFlowersData(List<FlowersInOrderEntity> flowersData) { this.flowersData = flowersData; }
 
     public void addFlowers(FlowersInOrderEntity d) {
-        flowersDate.add(d);
+        flowersData.add(d);
         d.setOrder(this);
     }
     public void removeFlowers(FlowersInOrderEntity d) {
         d.setOrder(null);
-        flowersDate.remove(d);
+        flowersData.remove(d);
     }
 
     @Override
@@ -86,12 +87,12 @@ public class OrderEntity implements Serializable {
                 Objects.equals(getDateClosing(), that.getDateClosing()) &&
                 Objects.equals(getFullPrice(), that.getFullPrice()) &&
                 Objects.equals(getOwner(), that.getOwner()) &&
-                Objects.equals(getFlowersDate(), that.getFlowersDate());
+                Objects.equals(getFlowersData(), that.getFlowersData());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getStatus(), getDateCreation(), getDateClosing(), getFullPrice(), getOwner(), getFlowersDate());
+        return Objects.hash(getId(), getStatus(), getDateCreation(), getDateClosing(), getFullPrice(), getOwner(), getFlowersData());
     }
 
     @Override
@@ -103,7 +104,22 @@ public class OrderEntity implements Serializable {
                 ", dateClosing=" + dateClosing +
                 ", fullPrice=" + fullPrice +
                 ", owner=" + owner.getLogin() +
-                ", flowersDateSize=" + flowersDate.size() +
+                ", flowersDateSize=" + flowersData.size() +
                 '}';
     }
+
+    @Converter(autoApply = true)
+    public static class LocalDateTimeAttributeConverter implements AttributeConverter<LocalDateTime, Timestamp> {
+
+        @Override
+        public Timestamp convertToDatabaseColumn(LocalDateTime locDateTime) {
+            return locDateTime == null ? null : Timestamp.valueOf(locDateTime);
+        }
+
+        @Override
+        public LocalDateTime convertToEntityAttribute(Timestamp sqlTimestamp) {
+            return sqlTimestamp == null ? null : sqlTimestamp.toLocalDateTime();
+        }
+    }
+
 }

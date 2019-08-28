@@ -5,16 +5,20 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Objects;
 
-@Entity
+
 @Table(name = "FLOWERS")
+@Entity(name = "FlowerEntity")
+@NamedQuery(name = "FlowerEntity.getAll", query = "SELECT c from FlowerEntity c")
 public class FlowerEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 //    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_cust")
 //    @SequenceGenerator(name = "seq_cust", sequenceName = "seq_cust", allocationSize = 1)
     private Long id;
+    @Column(name="title")
     private String name;
     private BigDecimal price;
+    @Column(name="count")
     private Integer countFlowersInStock;
     private String image;
 
@@ -26,7 +30,7 @@ public class FlowerEntity implements Serializable {
         this.countFlowersInStock = countFlowersInStock;
         this.image = image;
     }
-    public void setId(Long id) {this.id = id;} //Todo delete
+
     public Long getId() { return id; }
 
     public String getName() { return name; }

@@ -7,10 +7,11 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.annotation.PostConstruct;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import java.math.BigDecimal;
-import java.math.RoundingMode;
-import java.util.ArrayList;
-import java.util.HashMap;
+import javax.persistence.TypedQuery;
+//import java.math.BigDecimal;
+//import java.math.RoundingMode;
+//import java.util.ArrayList;
+//import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
@@ -22,8 +23,7 @@ public class UserAccess {
 
     @PersistenceContext
     private EntityManager em;
-
-    private Map<String, UserEntity> mapUser;
+//    private Map<String, UserEntity> mapUser;
 
 
     @PostConstruct
@@ -41,6 +41,7 @@ public class UserAccess {
 
     public UserEntity add(UserEntity userEntity){
         em.persist(userEntity);
+        em.flush();
         return (get(userEntity));
 //        if (get(userEntity) != null)
 //            return null;
@@ -50,30 +51,17 @@ public class UserAccess {
 //        return get(userEntity);
     }
 
-    public void delete(UserEntity userEntity){
-        mapUser.remove(userEntity.getLogin());
-//        em.getTransaction().begin();
-//        em.remove(get(id));
-//        em.getTransaction().commit();
-    }
-
     public UserEntity get(UserEntity userEntity){
 //        return mapUser.get(userEntity.getLogin());
         return em.find(UserEntity.class, userEntity.getLogin());
     }
 
     public void update(UserEntity userEntity){
-        if (get(userEntity) != null)
-            delete(userEntity);
-        mapUser.put(userEntity.getLogin(), userEntity);
-//        em.getTransaction().begin();
-//        em.persist(user);
-//        em.getTransaction().commit();
+//        if (get(userEntity) != null)
+//            delete(userEntity);
+//        mapUser.put(userEntity.getLogin(), userEntity);
+        em.merge(userEntity);
+        em.flush();
     }
 
-    public List<UserEntity> getAll(){
-        return new ArrayList<UserEntity>(mapUser.values());
-//        TypedQuery<UserEntity> namedQuery = em.createNamedQuery("UserEntity.getAll", UserEntity.class);
-//        return namedQuery.getResultList();
-    }
 }

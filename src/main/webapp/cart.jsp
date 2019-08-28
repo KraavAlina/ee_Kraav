@@ -5,14 +5,16 @@
 
 <%
     OrderEntity createdOrder = (OrderEntity) session.getAttribute("cart");
-    List<FlowersInOrderEntity> flowersOfOrder = (ArrayList<FlowersInOrderEntity>) session.getAttribute("flowersOfOrder");
-    List<OrderEntity> savedOrders = (ArrayList<OrderEntity>) request.getAttribute("savedOrder");
+    List<FlowersInOrderEntity> flowersOfOrder = (List<FlowersInOrderEntity>) session.getAttribute("flowersOfOrder");
+    List<OrderEntity> savedOrders = (List<OrderEntity>) request.getAttribute("savedOrder");
 %>
 
+</br></br></br>
+<p><h3>Корзина: </h3></p>
 <div class="container">
   <div class="row">
     <div class="col-2"></div>
-    <div class="col-8"> </br></br></br>
+    <div class="col-8">
         <% if (flowersOfOrder != null && !flowersOfOrder.isEmpty()) { %>
         <table class="table table-hover table-dark">
           <thead>
@@ -34,7 +36,6 @@
         </table>
     </div>
     <div class="col">
-    </br></br></br></br></br>
        <p><h5> Итого: <%= createdOrder.getFullPrice() %>р </h5></p>
        <font color="#008000"><h5> Цена со скидкой: </h5><h4> <%= createdOrder.getDiscountPrice() %>р </h4></font>
        <form id="Form" action = "/cart" method="POST">
@@ -53,12 +54,14 @@
 </div>
 
 
+<p><h3>Сохраненные заказы: </h3></p>
 <div class="container">
 <% if (savedOrders != null && !savedOrders.isEmpty()) {  %>
 <% for (OrderEntity order :  savedOrders) { %>
   <div class="row">
     <div class="col-2"></div>
-    <div class="col-8"> </br></br></br>
+    <div class="col-8">
+        <% if (!order.getStatus().equals(OrderStatus.CLOSED)) {%>
         <p><h5>Код заказа: <%= order.getId() %>
         <% if (order.getStatus().equals(OrderStatus.PAID)) { %>
             <font color="#008000"> (Оплачено: <%= order.getDiscountPrice() %>р )</font>
@@ -73,7 +76,7 @@
             </tr>
           </thead>
           <tbody>
-          <% flowersOfOrder = order.getFlowersDate();
+          <% flowersOfOrder = order.getFlowersData();
             for (FlowersInOrderEntity flowerInOrder : flowersOfOrder) { %>
             <tr>
               <th scope="row"><%= flowerInOrder.getFlower().getName() %></th>
@@ -86,9 +89,9 @@
     </div>
     <div class="col">
         <% if (!order.getStatus().equals(OrderStatus.PAID)) { %>
-        </br></br></br></br></br>
+        </br></br></br>
            <p><h5> Итого: <%= order.getFullPrice() %></h5></p>
-           <font color="#008000"><h5> Цена со скидкой: </h5><h4> <%= order.getDiscountPrice() %></h4></font>
+           <font color="#008000"><h5> Цена со скидкой: <%= order.getDiscountPrice() %></h5></font>
            <form id="Form" action = "/cart" method="POST">
                 <button type="mr-4 button" name="<%= order.getId() %>" value="check" class="btn btn-success">Оплатить</button>
            </form>
@@ -97,7 +100,7 @@
                     out.println("<div class='alert alert-danger' role='alert'>" + "На балансе недостаточно средств" + "</div>");
                 request.setAttribute("error", null);
            } %>
-         <% } %>
+         <% } } %>
     </div>
   </div>
   <% } } %>

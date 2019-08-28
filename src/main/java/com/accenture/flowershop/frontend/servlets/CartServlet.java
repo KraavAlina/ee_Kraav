@@ -4,7 +4,9 @@ package com.accenture.flowershop.frontend.servlets;
 import com.accenture.flowershop.backend.entity.OrderEntity;
 import com.accenture.flowershop.backend.entity.UserEntity;
 import com.accenture.flowershop.backend.services.OrderService;
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
 import javax.servlet.RequestDispatcher;
@@ -18,6 +20,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
 
+@Transactional
 @WebServlet(urlPatterns = {"/cart"})
 public class CartServlet extends HttpServlet {
 
@@ -29,6 +32,7 @@ public class CartServlet extends HttpServlet {
         super.init(config);
         SpringBeanAutowiringSupport.processInjectionBasedOnCurrentContext(this);
     }
+
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -43,8 +47,8 @@ public class CartServlet extends HttpServlet {
             if (userData == null) {
                 response.sendRedirect("/login");
             } else {
-                UserEntity userDate = (UserEntity) session.getAttribute("user");
-                List<OrderEntity> savedOrder = userDate.getOrders();
+                int sizeOrders = userData.getOrders().size();
+                List<OrderEntity> savedOrder = userData.getOrders();
                 request.setAttribute("savedOrder", savedOrder);
                 RequestDispatcher dispatcher = request.getRequestDispatcher(jspName);
                 dispatcher.forward(request, response);
@@ -58,14 +62,14 @@ public class CartServlet extends HttpServlet {
 
         String jspName = "/cart.jsp";
 
-        UserEntity userDate = (UserEntity) session.getAttribute("user");
+        UserEntity userData = (UserEntity) session.getAttribute("user");
         OrderEntity createdOrder = (OrderEntity) session.getAttribute("cart");
 
-        List<OrderEntity> savedOrder = userDate.getOrders();
+        List<OrderEntity> savedOrder = userData.getOrders();
 
         String createOrder = (String) request.getParameter("createOrder");
 
-        List<OrderEntity> allOrderUser = userDate.getOrders();
+        List<OrderEntity> allOrderUser = userData.getOrders();
         String payIdOrder = null;
         for (OrderEntity order : allOrderUser) {
             String isOrder = (String) request.getParameter(order.getId().toString());
@@ -92,6 +96,12 @@ public class CartServlet extends HttpServlet {
             // Оплачиваем заказ
             if (payIdOrder != null && !payIdOrder.isEmpty()){
                 OrderEntity order = orderService.payOrder(payIdOrder);
+
+                // Изменение данных в сессии
+                userData = order.getOwner();
+                savedOrder = userData.getOrders();
+                session.setAttribute("user", userData);
+
 
 
             }

@@ -7,22 +7,25 @@ import java.math.BigDecimal;
 import java.util.Objects;
 
 
-@Entity
 @Table(name = "FLOWERS_IN_ORDER")
+@Entity(name="FlowersInOrderEntity")
+@NamedQuery(name = "FlowersInOrderEntity.getAll", query = "SELECT c from FlowersInOrderEntity c")
 public class FlowersInOrderEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "flowerInOrder")
+    @JoinColumn(name = "flower_id", referencedColumnName="id")
     private FlowerEntity flower;
 
+    @Column(name = "count")
     private Integer countFlowersInOrder;
+    @Column(name="price")
     private BigDecimal pricePerFlower;
 
     @ManyToOne
-    @JoinColumn(name = "orderWithFlowers")
+    @JoinColumn(name = "order_id", referencedColumnName="id")
     private OrderEntity order;
 
     public FlowersInOrderEntity(){}
@@ -35,7 +38,6 @@ public class FlowersInOrderEntity implements Serializable {
         this.pricePerFlower = price;
     }
 
-    public void setId(Long id) {this.id = id;} //Todo delete
     public Long getId() { return id; }
 
     public FlowerEntity getFlower() { return flower; }

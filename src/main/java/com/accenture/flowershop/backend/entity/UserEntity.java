@@ -2,6 +2,10 @@ package com.accenture.flowershop.backend.entity;
 
 
 
+
+
+import org.hibernate.annotations.Fetch;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -22,7 +26,10 @@ public class UserEntity implements Serializable {
     private BigDecimal balance;
     private Integer discount;
 
-    @OneToMany(mappedBy = "owner", orphanRemoval = true, cascade = CascadeType.ALL)
+
+    @Fetch(value = org.hibernate.annotations.FetchMode.SELECT)
+    @OneToMany(mappedBy = "owner", orphanRemoval = true, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OrderBy("status")
     private List<OrderEntity> orders = new ArrayList<>();
 
     public UserEntity (){}
@@ -33,8 +40,7 @@ public class UserEntity implements Serializable {
     }
 
     public UserEntity (String login, String password, String fullName, String address, String phone) {
-        this.setLogin(login);
-        this.setPassword(password);
+        this(login, password);
         this.setFullName(fullName);
         this.setAddress(address);
         this.setPhone(phone);
@@ -43,7 +49,6 @@ public class UserEntity implements Serializable {
     public Boolean isAdmin() { return (login.equals("admin")); }
 
     public String getLogin() { return login; }
-    public void setLogin(String login) { this.login = login; }
 
     public String getPassword() { return password; }
     public void setPassword(String password) { this.password = password; }
@@ -70,7 +75,6 @@ public class UserEntity implements Serializable {
         orders.add(d);
         d.setOwner(this);
     }
-
     public void removeOrder(OrderEntity d) {
         d.setOwner(null);
         orders.remove(d);
@@ -99,14 +103,13 @@ public class UserEntity implements Serializable {
     @Override
     public String toString() {
         return "UserEntity{" +
-                ", login='" + login + '\'' +
+                "login='" + login + '\'' +
                 ", password='" + "*".repeat(password.length()) + '\'' +
                 ", fullName='" + fullName + '\'' +
                 ", address='" + address + '\'' +
                 ", phone='" + phone + '\'' +
                 ", balance=" + balance +
                 ", discount=" + discount +
-                ", orders=" + orders +
                 '}';
     }
 }
