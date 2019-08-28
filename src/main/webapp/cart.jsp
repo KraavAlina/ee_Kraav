@@ -9,7 +9,7 @@
     List<OrderEntity> savedOrders = (List<OrderEntity>) request.getAttribute("savedOrder");
 %>
 
-</br></br></br>
+
 <p><h3>Корзина: </h3></p>
 <div class="container">
   <div class="row">
@@ -95,10 +95,10 @@
            <form id="Form" action = "/cart" method="POST">
                 <button type="mr-4 button" name="<%= order.getId() %>" value="check" class="btn btn-success">Оплатить</button>
            </form>
-           <% if ((String) request.getAttribute("error") != null) {
-                if (request.getAttribute("error").equals("notEnoughMoney"))
+           <% if ((String) request.getAttribute("error" + order.getId()) != null) {
+                if (request.getAttribute("error" + order.getId()).equals("notEnoughMoney"))
                     out.println("<div class='alert alert-danger' role='alert'>" + "На балансе недостаточно средств" + "</div>");
-                request.setAttribute("error", null);
+                request.setAttribute("error" + order.getId(), null);
            } %>
          <% } } %>
     </div>

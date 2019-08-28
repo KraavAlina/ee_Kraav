@@ -32,6 +32,10 @@ public class FlowerService {
         return flowerAccess.getById(id);
     }
 
+    public List<FlowerEntity> findFlowerByName(String nameFlower) {
+        return flowerAccess.getByName(nameFlower);
+    }
+
     public List<FlowerEntity> getAllOrderedFlowers (List<Long> idOrderedFlowers){
         List<FlowerEntity> returnFlowerList = new ArrayList<>();
         for (Long idFlower : idOrderedFlowers){

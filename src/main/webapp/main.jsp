@@ -10,8 +10,16 @@
 
 <div class="container">
   <div class="row">
-    <div class="col-2"></div>
-    <div class="col-8"> </br></br></br>
+    <div class="col-2">
+    <form id="Form" action = "/main" method="POST">
+    <div class="form-group">
+        <label for="exampleInputEmail1"> Поиск по названию: </label>
+        <input type="searchedName" typeof="text" name="searchedName" class="form-control">
+    </div>
+        <button type="mr-4 button" name="searchName" value="check" class="btn btn-outline-info">Поиск</button>
+    </form>
+    </div>
+    <div class="col-8">
         <table class="table table-hover table-dark">
           <thead>
             <tr>
@@ -38,10 +46,9 @@
           </tbody>
         </table>
     </div>
-    <div class="col">
-    </br></br></br></br></br>
+    <div class="col"></br>
        <form id="Form" action = "/main" method="POST">
-            <button type="mr-4 button" name="order" value="check" class="btn btn-success">Заказать</button>
+            <button type="mr-4 button" name="order" value="check" class="btn btn-success btn-lg btn-block">Заказать</button>
        </form>
     </div>
   </div>

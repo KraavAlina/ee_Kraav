@@ -67,6 +67,12 @@ public class FlowerAccess {
         return em.find(FlowerEntity.class, id);
     }
 
+    public List<FlowerEntity> getByName(String name){
+        TypedQuery<FlowerEntity> flowerQuery = em.createQuery("SELECT f from FlowerEntity f where f.name like :name", FlowerEntity.class);
+        flowerQuery.setParameter("name", name);
+        return flowerQuery.getResultList();
+    }
+
 
 
     public void update(FlowerEntity flowerEntity){

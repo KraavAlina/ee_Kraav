@@ -96,12 +96,17 @@ public class CartServlet extends HttpServlet {
             // Оплачиваем заказ
             if (payIdOrder != null && !payIdOrder.isEmpty()){
                 OrderEntity order = orderService.payOrder(payIdOrder);
+                request.removeAttribute(payIdOrder);
 
-                // Изменение данных в сессии
-                userData = order.getOwner();
-                savedOrder = userData.getOrders();
-                session.setAttribute("user", userData);
-
+                // Если заказ не оплачен, значит недостаточно средств
+                if (order == null) {
+                    request.setAttribute("error" + payIdOrder, "notEnoughMoney");
+                } else {
+                    // Изменение данных в сессии
+                    userData = order.getOwner();
+                    savedOrder = userData.getOrders();
+                    session.setAttribute("user", userData);
+                }
 
 
             }

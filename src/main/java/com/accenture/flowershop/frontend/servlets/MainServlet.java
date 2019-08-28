@@ -61,12 +61,14 @@ public class MainServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+        request.setCharacterEncoding("UTF-8");
         HttpSession session = request.getSession(false);
 
         String jspName = "/main.jsp";
 
         String logout = request.getParameter("logout");
         String cart = request.getParameter("order");
+        String searchName = request.getParameter("searchName");
 
         // Если нажата кнопка выхода, закрываем сессию и переходим в начало
         if (logout != null && !logout.isEmpty() ) {
@@ -104,6 +106,13 @@ public class MainServlet extends HttpServlet {
                 session.setAttribute("cart", newOrder);
                 session.setAttribute("flowersOfOrder", flowersOfOrder);
                 request.removeAttribute("order");
+            }
+
+            // Если был вызван поиск по имени
+            if (searchName != null && !searchName.isEmpty()) {
+                String searchedName = request.getParameter("searchedName");
+                List<FlowerEntity> searchedFlower = flowerService.findFlowerByName(searchedName);
+                System.out.println(searchedName);
             }
 
             request.setAttribute("flowersList", flowerService.getAllFlowers());

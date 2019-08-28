@@ -7,7 +7,7 @@
   <div class="row">
     <div class="col-4"></div>
     <div class="col-4">
-        <h3 class="text-center"></br></br></br>Регистрация</h3>
+        <h3 class="text-center">Регистрация</h3>
         <p class="font-weight-light text-center"></p>
         </p>
         <form id="Form" method="POST">
