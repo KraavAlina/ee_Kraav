@@ -7,13 +7,10 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.annotation.PostConstruct;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.TypedQuery;
 //import java.math.BigDecimal;
 //import java.math.RoundingMode;
 //import java.util.ArrayList;
 //import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import java.util.logging.Logger;
 
 @Transactional

@@ -29,7 +29,6 @@ public class UserEntity implements Serializable {
 
     @Fetch(value = org.hibernate.annotations.FetchMode.SELECT)
     @OneToMany(mappedBy = "owner", orphanRemoval = true, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @OrderBy("status")
     private List<OrderEntity> orders = new ArrayList<>();
 
     public UserEntity (){}

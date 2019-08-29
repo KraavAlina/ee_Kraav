@@ -1,7 +1,6 @@
 package com.accenture.flowershop.backend.access;
 
 
-import com.accenture.flowershop.backend.entity.FlowersInOrderEntity;
 import com.accenture.flowershop.backend.entity.OrderEntity;
 import com.accenture.flowershop.backend.entity.UserEntity;
 import org.springframework.stereotype.Repository;
@@ -9,12 +8,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.PostConstruct;
 import javax.persistence.EntityManager;
+import javax.persistence.OrderBy;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.logging.Logger;
 
 @Transactional
@@ -75,4 +72,12 @@ public class OrderAccess {
         TypedQuery<OrderEntity> namedQuery = em.createNamedQuery("OrderEntity.getAll", OrderEntity.class);
         return namedQuery.getResultList();
     }
+
+    public List<OrderEntity> getAllByOrder(){
+        String query = "SELECT o FROM OrderEntity AS o ORDER BY o.dateCreation DESC, o.status DESC";
+        return em.createQuery(query).getResultList();
+    }
+
+
+
 }

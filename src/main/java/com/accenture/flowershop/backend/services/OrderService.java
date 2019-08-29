@@ -13,9 +13,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.PostConstruct;
+import javax.persistence.OrderBy;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.sql.Timestamp;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -121,7 +121,7 @@ public class OrderService {
     меньше стоимости заказа
     * */
     public OrderEntity payOrder (String payIdOrder){
-        OrderEntity orderEntity = orderAccess.getById(Long.parseLong(payIdOrder));
+        OrderEntity orderEntity = findById(Long.parseLong(payIdOrder));
         UserEntity owner = orderEntity.getOwner();
         if (owner.getBalance().compareTo(orderEntity.getFullPrice()) == -1) {
             return null;
@@ -134,5 +134,31 @@ public class OrderService {
         }
         return orderEntity;
     }
+
+    /* Закрытие заказа
+    Вход: заказ
+    Выход: заказ с измененным статусом CLOSED;
+    * */
+    public OrderEntity closeOrder (OrderEntity order){
+        order.setStatus(OrderStatus.CLOSED);
+        orderAccess.update(order);
+        return order;
+    }
+
+
+
+    public OrderEntity findById (Long id){
+        return orderAccess.getById(id);
+    }
+
+    public List<OrderEntity> getAllOrders () {
+        return orderAccess.getAll();
+    }
+
+    // Отсортированный список по дате создания и статусу
+    public List<OrderEntity> getAllSavedOrders () {
+        return orderAccess.getAllByOrder();
+    }
+
 
 }
