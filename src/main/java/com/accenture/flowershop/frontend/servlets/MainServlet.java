@@ -69,6 +69,7 @@ public class MainServlet extends HttpServlet {
         String logout = request.getParameter("logout");
         String cart = request.getParameter("order");
         String searchName = request.getParameter("searchName");
+        String searchPrice = request.getParameter("searchPrice");
 
         // Если нажата кнопка выхода, закрываем сессию и переходим в начало
         if (logout != null && !logout.isEmpty() ) {
@@ -111,8 +112,24 @@ public class MainServlet extends HttpServlet {
             // Если был вызван поиск по имени
             if (searchName != null && !searchName.isEmpty()) {
                 String searchedName = request.getParameter("searchedName");
-                List<FlowerEntity> searchedFlower = flowerService.findFlowerByName(searchedName);
-                System.out.println(searchedName);
+                if (searchedName != null && !searchedName.isEmpty()) {
+                    List<FlowerEntity> searchedFlower = flowerService.findFlowerByName(searchedName);
+                    request.setAttribute("flowersFoundList", searchedFlower);
+                    request.removeAttribute("searchName");
+                }
+            }
+
+            // Если был вызван поиск по цене
+            if (searchPrice != null && !searchPrice.isEmpty()) {
+                String priceFrom = request.getParameter("searchedPriceFrom");
+                String priceTo = request.getParameter("searchedPriceTo");
+                if (priceFrom != null && !priceFrom.isEmpty() ||
+                        priceTo != null && !priceTo.isEmpty()) {
+                    List<FlowerEntity> searchedFlower = flowerService.findFlowersByPrice(priceFrom, priceTo);
+                    request.setAttribute("flowersFoundList", searchedFlower);
+                    request.removeAttribute("searchedPriceFrom");
+                    request.removeAttribute("searchedPriceTo");
+                }
             }
 
             request.setAttribute("flowersList", flowerService.getAllFlowers());

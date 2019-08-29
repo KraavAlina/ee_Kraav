@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.PostConstruct;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
@@ -34,6 +35,20 @@ public class FlowerService {
 
     public List<FlowerEntity> findFlowerByName(String nameFlower) {
         return flowerAccess.getByName(nameFlower);
+    }
+
+    public List<FlowerEntity> findFlowersByPrice(String priceFrom, String priceTo) {
+        BigDecimal priceFromInt;
+        BigDecimal priceToInt;
+        if (!priceFrom.isEmpty())
+            priceFromInt = new BigDecimal(priceFrom);
+        else
+            priceFromInt = BigDecimal.ZERO;
+        if (!priceTo.isEmpty())
+            priceToInt = new BigDecimal(priceTo);
+        else
+            priceToInt = BigDecimal.ZERO;
+        return flowerAccess.getByPrice(priceFromInt, priceToInt);
     }
 
     public List<FlowerEntity> getAllOrderedFlowers (List<Long> idOrderedFlowers){

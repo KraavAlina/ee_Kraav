@@ -10,12 +10,13 @@
 %>
 
 
-<p><h3>Корзина: </h3></p>
+<% if (flowersOfOrder != null && !flowersOfOrder.isEmpty()) { %>
 <div class="container">
   <div class="row">
-    <div class="col-2"></div>
+    <div class="col-2">
+    <h4>Корзина: </h4>
+    </div>
     <div class="col-8">
-        <% if (flowersOfOrder != null && !flowersOfOrder.isEmpty()) { %>
         <table class="table table-hover table-dark">
           <thead>
             <tr>
@@ -36,8 +37,8 @@
         </table>
     </div>
     <div class="col">
-       <p><h5> Итого: <%= createdOrder.getFullPrice() %>р </h5></p>
-       <font color="#008000"><h5> Цена со скидкой: </h5><h4> <%= createdOrder.getDiscountPrice() %>р </h4></font>
+       <p><h6> Итого: <%= createdOrder.getFullPrice() %>р </h6></p>
+       <font color="#008000"><h6> Цена со скидкой: </h6><h6> <%= createdOrder.getDiscountPrice() %>р </h6></font>
        <form id="Form" action = "/cart" method="POST">
             <button type="mr-4 button" name="createOrder" value="check" class="btn btn-success">Создать заказ</button>
        </form>
@@ -47,49 +48,50 @@
             request.setAttribute("error", null);
        } %>
     </div>
-    <% } else { %>
-         <h3><p align="center"> В корзине пока ничего нет. </p></h3>
-    <% } %>
   </div>
 </div>
+<% } else { %>
+   <h3 class="text-center"> В корзине пока ничего нет. </h3>
+<% } %>
 
 
-<p><h3>Сохраненные заказы: </h3></p>
-<div class="container">
+
 <% if (savedOrders != null && !savedOrders.isEmpty()) {  %>
-<% for (OrderEntity order :  savedOrders) { %>
+</br><h4 class="text-center">Сохраненные заказы </h4>
+<div class="container">
   <div class="row">
+    <% for (OrderEntity order :  savedOrders) { %>
+        <% if (!order.getStatus().equals(OrderStatus.CLOSED)) {%>
     <div class="col-2"></div>
     <div class="col-8">
-        <% if (!order.getStatus().equals(OrderStatus.CLOSED)) {%>
         <p><h5>Код заказа: <%= order.getId() %>
         <% if (order.getStatus().equals(OrderStatus.PAID)) { %>
-            <font color="#008000"> (Оплачено: <%= order.getDiscountPrice() %>р )</font>
+             <font color="#008000"> (Оплачено: <%= order.getDiscountPrice() %>р )</font>
         <% } %>
         </h5></p>
-        <table class="table table-hover table-dark">
-          <thead>
-            <tr>
-              <th scope="col">Цветок</th>
-              <th scope="col">Количество</th>
-              <th scope="col">Стоимость</th>
-            </tr>
-          </thead>
-          <tbody>
-          <% flowersOfOrder = order.getFlowersData();
-            for (FlowersInOrderEntity flowerInOrder : flowersOfOrder) { %>
-            <tr>
-              <th scope="row"><%= flowerInOrder.getFlower().getName() %></th>
-              <td><%= flowerInOrder.getCount() %></td>
-              <td><%= flowerInOrder.getPricePerFlower() %></td>
-            </tr>
-            <% }%>
-          </tbody>
+            <table class="table table-hover table-dark">
+                <thead>
+                <tr>
+                    <th scope="col">Цветок</th>
+                    <th scope="col">Количество</th>
+                    <th scope="col">Стоимость</th>
+                </tr>
+                </thead>
+            <tbody>
+            <% flowersOfOrder = order.getFlowersData();
+                for (FlowersInOrderEntity flowerInOrder : flowersOfOrder) { %>
+                <tr>
+                    <th scope="row"><%= flowerInOrder.getFlower().getName() %></th>
+                    <td><%= flowerInOrder.getCount() %></td>
+                    <td><%= flowerInOrder.getPricePerFlower() %></td>
+                </tr>
+                <% }%>
+            </tbody>
         </table>
     </div>
     <div class="col">
         <% if (!order.getStatus().equals(OrderStatus.PAID)) { %>
-        </br></br></br>
+        </br>
            <p><h5> Итого: <%= order.getFullPrice() %></h5></p>
            <font color="#008000"><h5> Цена со скидкой: <%= order.getDiscountPrice() %></h5></font>
            <form id="Form" action = "/cart" method="POST">
@@ -100,11 +102,11 @@
                     out.println("<div class='alert alert-danger' role='alert'>" + "На балансе недостаточно средств" + "</div>");
                 request.setAttribute("error" + order.getId(), null);
            } %>
-         <% } } %>
+         <% } %>
     </div>
+    <% } } %>
   </div>
-  <% } } %>
 </div>
-
+<% } %>
 
 

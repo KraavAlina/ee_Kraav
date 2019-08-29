@@ -10,12 +10,14 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.annotation.PostConstruct;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 //import java.math.BigDecimal;
 //import java.math.RoundingMode;
 //import java.util.ArrayList;
 //import java.util.HashMap;
 //import java.util.Map;
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -68,11 +70,33 @@ public class FlowerAccess {
     }
 
     public List<FlowerEntity> getByName(String name){
-        TypedQuery<FlowerEntity> flowerQuery = em.createQuery("SELECT f from FlowerEntity f where f.name like :name", FlowerEntity.class);
-        flowerQuery.setParameter("name", name);
+        String collectedString = Character.toString(name.charAt(0)).toUpperCase() + name.substring(1).toLowerCase();
+        TypedQuery<FlowerEntity> flowerQuery = em.createQuery("SELECT f FROM FlowerEntity f WHERE f.name LIKE :name", FlowerEntity.class);
+        flowerQuery.setParameter("name", "%" + collectedString + "%");
         return flowerQuery.getResultList();
     }
 
+
+    public List<FlowerEntity> getByPrice(BigDecimal fromPrice, BigDecimal toPrice){
+        TypedQuery<FlowerEntity> flowerQuery;
+        if (fromPrice.equals(BigDecimal.ZERO)) {
+            flowerQuery = em.createQuery("SELECT f FROM FlowerEntity f WHERE f.price <= :toPrice", FlowerEntity.class);
+            flowerQuery.setParameter("toPrice", toPrice);
+            return flowerQuery.getResultList();
+        }
+        if (toPrice.equals(BigDecimal.ZERO)) {
+            flowerQuery = em.createQuery("SELECT f FROM FlowerEntity f WHERE f.price >= :fromPrice", FlowerEntity.class);
+            flowerQuery.setParameter("fromPrice", fromPrice);
+            return flowerQuery.getResultList();
+        }
+        if (fromPrice.compareTo(BigDecimal.ZERO) > -1  && toPrice.compareTo(BigDecimal.ZERO) > -1) {
+            flowerQuery = em.createQuery("SELECT f FROM FlowerEntity f WHERE f.price <= :toPrice AND f.price >= :fromPrice", FlowerEntity.class);
+            flowerQuery.setParameter("fromPrice", fromPrice);
+            flowerQuery.setParameter("toPrice", toPrice);
+            return flowerQuery.getResultList();
+        }
+        return null;
+    }
 
 
     public void update(FlowerEntity flowerEntity){
