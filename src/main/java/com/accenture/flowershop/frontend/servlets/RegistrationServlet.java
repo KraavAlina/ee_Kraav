@@ -46,7 +46,8 @@ public class RegistrationServlet  extends HttpServlet {
 
         if (name.isEmpty() || address.isEmpty() || phone.isEmpty() || login.isEmpty() || password1.isEmpty()) {
             request.setAttribute("error", "errorEmptyDataRegistration");
-        } else {
+        }
+        else {
             if (!password1.equals(password2)) {
                 request.setAttribute("error", "errorEqualsPass");
             }
@@ -59,8 +60,10 @@ public class RegistrationServlet  extends HttpServlet {
             }
         }
 
-        if (request.getAttribute("error") == null)
+        if (request.getAttribute("error") == null) {
             response.sendRedirect("/login");
+
+        }
         else {
             RequestDispatcher requestDispatcher = request.getRequestDispatcher(jspName);
             requestDispatcher.forward(request, response);

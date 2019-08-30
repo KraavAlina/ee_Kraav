@@ -9,13 +9,13 @@ create table FLOWERS_IN_ORDER(
 );
 
 
-insert into FLOWERS_IN_ORDER values (null, 1, 1, 2, 400);
-insert into FLOWERS_IN_ORDER values (null, 1, 2, 3, 451.5);
-insert into FLOWERS_IN_ORDER values (null, 2, 4, 3, 750);
-insert into FLOWERS_IN_ORDER values (null, 2, 5, 6, 900);
-insert into FLOWERS_IN_ORDER values (null, 2, 3, 4, 601);
-insert into FLOWERS_IN_ORDER values (null, 3, 4, 4, 1000);
-insert into FLOWERS_IN_ORDER values (null, 3, 1, 5, 1000);
-insert into FLOWERS_IN_ORDER values (null, 4, 5, 1, 150);
-insert into FLOWERS_IN_ORDER values (null, 4, 2, 2, 301);
+insert into FLOWERS_IN_ORDER values (null, 1, 1, 2, 400.00);
+insert into FLOWERS_IN_ORDER values (null, 1, 2, 3, 451.50);
+insert into FLOWERS_IN_ORDER values (null, 2, 4, 3, 750.00);
+insert into FLOWERS_IN_ORDER values (null, 2, 5, 6, 900.00);
+insert into FLOWERS_IN_ORDER values (null, 2, 3, 4, 601.00);
+insert into FLOWERS_IN_ORDER values (null, 3, 4, 4, 1000.00);
+insert into FLOWERS_IN_ORDER values (null, 3, 1, 5, 1000.00);
+insert into FLOWERS_IN_ORDER values (null, 4, 5, 1, 150.00);
+insert into FLOWERS_IN_ORDER values (null, 4, 2, 2, 301.00);
 

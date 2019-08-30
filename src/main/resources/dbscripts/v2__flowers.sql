@@ -6,8 +6,8 @@ create table FLOWERS(
     image varchar(255)
 );
 
-insert into FLOWERS values (null, 'Роза', 200, 200, '/static/images/rose.jpg');
-insert into FLOWERS values (null, 'Ромашка', 150.5, 300, '/static/images/chamomile.jpg');
+insert into FLOWERS values (null, 'Роза', 200.00, 200, '/static/images/rose.jpg');
+insert into FLOWERS values (null, 'Ромашка', 150.50, 300, '/static/images/chamomile.jpg');
 insert into FLOWERS values (null, 'Георгина', 150.25, 300, '/static/images/georgina.jpg');
-insert into FLOWERS values (null, 'Лилия', 250, 100, '/static/images/lily.jpg');
-insert into FLOWERS values (null, 'Пион', 150, 300, '/static/images/peony.jpg');
+insert into FLOWERS values (null, 'Лилия', 250.00, 100, '/static/images/lily.jpg');
+insert into FLOWERS values (null, 'Пион', 150.00, 300, '/static/images/peony.jpg');

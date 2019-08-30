@@ -10,6 +10,6 @@ create table ORDERS(
 );
 
 insert into ORDERS values (null, 'alina', 'CREATED', 851.5, 808.93, '2019-04-15 10:00:00', null);
-insert into ORDERS values (null, 'alina', 'CLOSED', 2251, 2138.45,'2019-03-15 10:00:00', '2019-03-17 10:00:00');
-insert into ORDERS values (null, 'alina', 'PAID', 2000, 1900,'2019-04-15 12:00:00', null);
-insert into ORDERS values (null, 'alex', 'CREATED', 451, 419.43, '2019-04-13 12:00:00', null);
+insert into ORDERS values (null, 'alina', 'CLOSED', 2251.00, 2138.45,'2019-03-15 10:00:00', '2019-03-17 10:00:00');
+insert into ORDERS values (null, 'alina', 'PAID', 2000.00, 1900.00,'2019-04-15 12:00:00', null);
+insert into ORDERS values (null, 'alex', 'CREATED', 451.00, 419.43, '2019-04-13 12:00:00', null);
