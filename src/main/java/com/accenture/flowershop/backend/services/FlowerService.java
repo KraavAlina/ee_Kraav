@@ -65,4 +65,6 @@ public class FlowerService {
     public List<FlowerEntity> getAllFlowers() {
        return flowerAccess.getAll();
     }
+
+    public void update(FlowerEntity flowerEntity) { flowerAccess.update(flowerEntity); }
 }

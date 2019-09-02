@@ -4,11 +4,13 @@
        xmlns:context="http://www.springframework.org/schema/context"
        xmlns:jee="http://www.springframework.org/schema/jee"
        xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:jaxws="http://cxf.apache.org/jaxws"
        xsi:schemaLocation="
        http://www.springframework.org/schema/beans      http://www.springframework.org/schema/beans/spring-beans.xsd
        http://www.springframework.org/schema/context    http://www.springframework.org/schema/context/spring-context.xsd
        http://www.springframework.org/schema/jee        http://www.springframework.org/schema/jee/spring-jee-2.5.xsd
-       http://www.springframework.org/schema/tx         http://www.springframework.org/schema/tx/spring-tx.xsd">
+       http://www.springframework.org/schema/tx         http://www.springframework.org/schema/tx/spring-tx.xsd
+       http://cxf.apache.org/jaxws                      http://cxf.apache.org/schemas/jaxws.xsd">
 
 
     <context:annotation-config/>
@@ -70,6 +72,11 @@
         <property name="mappingLocation"
                   value="classpath:/config/mapping.xml" />
     </bean>
+
+    <!--  Flowers Stock web service  -->
+    <bean id="FlowersStockImpl" class="com.accenture.flowershop.webService.FlowersStockWebServiceImpl" />
+    <jaxws:endpoint id="FlowersStockWebService" implementor="#FlowersStockImpl" address="/FlowersStockWebService"/>
+
 
     <tx:annotation-driven/>
 

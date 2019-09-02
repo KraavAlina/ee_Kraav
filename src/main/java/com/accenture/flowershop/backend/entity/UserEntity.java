@@ -26,7 +26,6 @@ public class UserEntity implements Serializable {
     private BigDecimal balance;
     private Integer discount;
 
-
     @Fetch(value = org.hibernate.annotations.FetchMode.SELECT)
     @OneToMany(mappedBy = "owner", orphanRemoval = true, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<OrderEntity> orders = new ArrayList<>();

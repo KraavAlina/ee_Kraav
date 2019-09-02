@@ -51,7 +51,6 @@ public class UserService  {
         userAccess.update(userEntity);
     }
 
-
     public void createXML(User user) {
         try {
             String filepath =  converter.getPath() + "user_" + user.getLogin() + ".xml";
