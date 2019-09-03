@@ -2,7 +2,6 @@ package com.accenture.flowershop.backend.services;
 
 import com.accenture.flowershop.backend.access.UserAccess;
 import com.accenture.flowershop.backend.entity.UserEntity;
-import com.accenture.flowershop.frontend.DTO.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,10 +19,13 @@ public class UserService  {
     private static final Logger LOG = Logger.getLogger(UserEntity.class.getName());
 
     @Autowired
+    private UserAccess userAccess;
+
+    @Autowired
     private XMLConverter converter;
 
     @Autowired
-    private UserAccess userAccess;
+    private JmsMessageService jmsMessageService;
 
     @PostConstruct
     public void init() {
@@ -37,8 +39,9 @@ public class UserService  {
         userEntity.setDiscount(0);
         UserEntity savedUser = userAccess.add(userEntity);
 
-        User user = new User(userEntity.getLogin(),userEntity.getPassword(),userEntity.getFullName(),userEntity.getAddress(),userEntity.getPhone());
-        createXML(user);
+        createXML(savedUser);
+
+        jmsMessageService.SendNewUserSql(savedUser);
 
         return savedUser;
     }
@@ -46,11 +49,11 @@ public class UserService  {
     public UserEntity login (UserEntity userEntity){ return userAccess.get(userEntity); }
     public UserEntity findByLogin (String login) { return userAccess.getByLogin(login); }
 
-    public void updateUser(UserEntity userEntity) {
+    public void update(UserEntity userEntity) {
         userAccess.update(userEntity);
     }
 
-    public void createXML(User user) {
+    public void createXML(UserEntity user) {
         try {
             String filepath =  converter.getPath() + "user_" + user.getLogin() + ".xml";
             converter.convertFromObjectToXML(user, filepath);

@@ -78,6 +78,11 @@
     <jaxws:endpoint id="FlowersStockWebService" implementor="#FlowersStockImpl" address="/FlowersStockWebService"/>
 
 
+    <jee:jndi-lookup id="connectionFactory" jndi-name="jms/connectionFactory"/>
+    <jee:jndi-lookup id="sendNewUsersXmlQueue" jndi-name="jms/outQueue"/>
+    <jee:jndi-lookup id="receiveUserDiscountXmlQueue" jndi-name="jms/inQueue"/>
+
+
     <tx:annotation-driven/>
 
 </beans>

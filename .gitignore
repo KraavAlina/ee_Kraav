@@ -1,2 +1,6 @@
-/target
-/BD
+target/
+BD/
+userXML/
+apache-activemq-5.15.9/
+.gitignore
+.idea

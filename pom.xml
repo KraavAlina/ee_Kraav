@@ -179,6 +179,19 @@
         </dependency>
 
 
+        <dependency>
+            <groupId>org.apache.activemq</groupId>
+            <artifactId>activemq-pool</artifactId>
+            <version>5.15.9</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>org.slf4j</artifactId>
+                    <groupId>slf4j-log4j12</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+
     </dependencies>
 
 
@@ -232,6 +245,12 @@
                             <groupId>org.flywaydb</groupId>
                             <artifactId>flyway-core</artifactId>
                             <version>3.2.1</version>
+                        </dependency>
+                        <!-- https://mvnrepository.com/artifact/org.apache.activemq/activemq-client -->
+                        <dependency>
+                            <groupId>org.apache.activemq</groupId>
+                            <artifactId>activemq-client</artifactId>
+                            <version>5.15.9</version>
                         </dependency>
                     </dependencies>
                 </plugin>
