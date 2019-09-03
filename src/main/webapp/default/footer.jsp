@@ -9,7 +9,7 @@
         <script>
             $("#login").change(function(){
                 $.ajax({
-                    url: "/rest/check_login/"+$("#login").val(),
+                    url: "flowershop/rest/check_login/"+$("#login").val(),
                     success: function(data) {
                         if (data == "false"){
                             $("#submit").removeAttr("disabled");

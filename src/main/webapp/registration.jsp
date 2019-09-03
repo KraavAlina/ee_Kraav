@@ -21,7 +21,7 @@
              <input id="phone" name="phone" class="form-control input-medium bfh-phone" data-format="+7 (ddd) ddd-dddd" placeholder="Телефон">
           </div>
           <div class="form-group">
-            <input class="form-control" id="login" name="login" value="${login}" required/>
+            <input class='form-control ${error != null ? "is-invalid" : ""}' id="login" name="login" placeholder="Логин" value="${login}" required/>
             <div class="invalid-feedback"> Логин уже занят</div>
           </div>
            <div class="form-group">
@@ -36,8 +36,8 @@
                         out.println("<div class='alert alert-warning' role='alert'>" + "Заполните все поля" + "</div>");
                     if (request.getAttribute("error").equals("errorEqualsPass"))
                         out.println("<div class='alert alert-warning' role='alert'>" + "Пароли не совпадают" + "</div>");
-                    //if (request.getAttribute("error").equals("errorLoginBusy"))
-                        //out.println("<div class='alert alert-warning' role='alert'>" + "Логин уже занят" + "</div>");
+                    if (request.getAttribute("error").equals("errorLoginBusy"))
+                        out.println("<div class='alert alert-warning' role='alert'>" + "Логин уже занят" + "</div>");
                     request.setAttribute("error", null);
                  }
            %>
