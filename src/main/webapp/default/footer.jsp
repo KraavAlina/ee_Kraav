@@ -6,5 +6,22 @@
 <script>
     $("#phone").inputmask({"mask":"+7 (999) 999-9999"});
 </script>
+        <script>
+            $("#login").change(function(){
+                $.ajax({
+                    url: "/rest/check_login/"+$("#login").val(),
+                    success: function(data) {
+                        if (data == "false"){
+                            $("#submit").removeAttr("disabled");
+                            $("#login").removeClass("is-invalid");
+                        }
+                        else{
+                            $("#submit").attr("disabled", "true");
+                            $("#login").addClass("is-invalid");
+                        }
+                    }
+                });
+            });
+        </script>
     </body>
 </html>

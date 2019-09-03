@@ -43,9 +43,8 @@ public class UserService  {
         return savedUser;
     }
 
-    public UserEntity login (UserEntity userEntity){
-        return userAccess.get(userEntity);
-    }
+    public UserEntity login (UserEntity userEntity){ return userAccess.get(userEntity); }
+    public UserEntity findByLogin (String login) { return userAccess.getByLogin(login); }
 
     public void updateUser(UserEntity userEntity) {
         userAccess.update(userEntity);

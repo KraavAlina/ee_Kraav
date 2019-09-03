@@ -15,7 +15,7 @@ public class FlowersStockClient {
                 // random([10,30])
                 sendRequestIncreaseFlowersStock((int) (Math.random() * 21 + 10));
                 // 10 sec
-                Thread.sleep(1 * 1000L);
+                Thread.sleep(10 * 1000L);
                 // 10 min - *60
             } catch (Exception e) {
                 e.printStackTrace();

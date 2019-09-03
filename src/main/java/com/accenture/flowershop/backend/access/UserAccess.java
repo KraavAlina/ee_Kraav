@@ -53,6 +53,10 @@ public class UserAccess {
         return em.find(UserEntity.class, userEntity.getLogin());
     }
 
+    public UserEntity getByLogin (String login) {
+        return em.find(UserEntity.class, login);
+    }
+
     public void update(UserEntity userEntity){
 //        if (get(userEntity) != null)
 //            delete(userEntity);
